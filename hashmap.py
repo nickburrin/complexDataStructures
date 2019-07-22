@@ -1,4 +1,4 @@
-
+from KVPair import KVPair
 ## TODO: How would you delete a key-value pair from this hash map?
 ## TODO: Parts of the code are a little repetitive, how would you factor these roles differently?
 ## TODO: What should your hash map do if a key-value is added and the array is full? How does this hash map handle that?
@@ -20,24 +20,24 @@ class HashMap:
         index = self.compressor(self.hash(key))
         currentValue = self.array[index]
         if currentValue is None:
-            self.array[index] = [key, value]
+            self.array[index] = KVPair(key, value)
         else:
-            if currentValue[0] == key:
-                self.array[index] = [key, value]
+            if currentValue.key() == key:
+                self.array[index].setValue(value)
             else:
                 # Collision occurred
                 number_collisions = 1
-                while(currentValue[0] != key):
+                while(currentValue.key() != key):
                     new_hash_code = self.hash(key, number_collisions)
                     new_array_index = self.compressor(new_hash_code)
                     currentValue = self.array[new_array_index]
 
                     if currentValue is None:
-                        self.array[new_array_index] = [key, value]
+                        self.array[new_array_index] = KVPair(key, value)
                         return
 
-                    if currentValue[0] == key:
-                        self.array[new_array_index] = [key, value]
+                    if currentValue.key() == key:
+                        self.array[new_array_index].setValue(value)
                         return
 
                     number_collisions += 1 
@@ -49,11 +49,11 @@ class HashMap:
         if possible_item is None:
             return None
         else:
-            if possible_item[0] == key:
-                return possible_item[1]
+            if possible_item.key() == key:
+                return possible_item.value()
             else:
                 retrieval_collisions = 1
-                while possible_item[0] != key:
+                while possible_item.key() != key:
                     new_hash_code = self.hash(key, retrieval_collisions)
                     retrieving_array_index = self.compressor(new_hash_code)
                     possible_item = self.array[retrieving_array_index]
@@ -61,8 +61,8 @@ class HashMap:
                     if possible_item is None:
                         return None
 
-                    if possible_item[0] == key:
-                        return possible_item[1]
+                    if possible_item.key() == key:
+                        return possible_item.value()
 
                     retrieval_collisions += 1 
 
