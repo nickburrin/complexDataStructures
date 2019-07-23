@@ -4,7 +4,7 @@ from Node import Node
 class HashMap:
     def __init__(self, size):
         self.size = size
-        self.array = [None for item in range(size)]
+        self.array = [LinkedList() for item in range(size)]
     
     def hash(self, key):
         encode = key.encode()
@@ -15,15 +15,19 @@ class HashMap:
         
     def assign(self, key, value):
         index = self.compress(self.hash(key))
-        self.array[index] = [key, value]
+        payload = Node([key, value])
+        listAtIndex = self.array[index]
+        for item in listAtIndex:
+            if item[0] == key:
+                item[1] = value
+
+        listAtIndex.insert(payload)
         
     def retrieve(self, key):
         index = self.compress(self.hash(key))
-        payload = self.array[index]
-        if payload is None:
-            return None
-        elif payload[0] != key:
-            return None
-        else:
-            return payload[1]
-    
+        listAtIndex = self.array[index]
+        for item in listAtIndex:
+            if item[0] == key:
+                return item[1]
+        
+        return None
