@@ -9,8 +9,4 @@ class TreeNode:
 
     def remove_child(self, child_node):
         print('Removing ' + child_node.value + ' from ' + self.value)
-        new_children = []
-        for node in self.children:
-            if node.value != child_node.value:
-                new_children.append(node)
-        self.children = new_children
+        self.children = [node for node in self.children if node != child_node]
