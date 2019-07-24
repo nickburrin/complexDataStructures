@@ -10,4 +10,11 @@ from treeNode import TreeNode
 # print(hashMap.retrieve('sandstone'))
 # print(hashMap.retrieve('gneiss'))
 
-seed = TreeNode('Nick')
+root = TreeNode("I am Root")
+child = TreeNode("A wee sappling")
+bad_seed = TreeNode("Root Rot!")
+
+root.add_child(child)
+root.add_child(bad_seed)
+
+root.remove_child(bad_seed)
